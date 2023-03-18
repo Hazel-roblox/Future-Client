@@ -865,5 +865,9 @@ end)
 fprint("Finished loading in "..tostring(math.floor((game:GetService("Workspace"):GetServerTimeNow() - startTime) * 1000) / 1000).."s\nPress "..GuiLibrary["GuiKeybind"].." to open the Gui.\nPlease join the discord for changelogs and to report bugs. \ndiscord.gg/bdjT5UmmDJ\nEnjoy using Future v"..shared._FUTUREVERSION.."")
 shared._FUTURECACHED = true
 local starttick = 1679125202.3546004
-fprint("Update recieved in "..starttick - tick())
+fprint("Last update was "..tick() - starttick.." seconds ago")
+if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
+	loadstring(readfile("Future/FutureMain.lua"))()
+	task.wait(9e9)
+end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
