@@ -730,6 +730,13 @@ end
 repeat task.wait(1) until shared.ConfigReady ~= nil
 GuiLibrary["LoadConfig"]("default")
 
+local function configLoad()
+	repeat 
+		GuiLibrary["LoadConfig"]("default")
+		task.wait(1)
+	until shared.Future == nil
+end
+
 -- Future command system
 
 local oldtab
