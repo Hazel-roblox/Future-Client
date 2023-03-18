@@ -234,5 +234,35 @@ AuraShowTarget = Aura.CreateToggle({
 })
 ]]
 
-task.wait(3)
-GuiLibrary["LoadConfig"](GuiLibrary["CurrentConfig"])
+-- config load
+local config
+if isfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default.json") then
+	config = game:GetService("HttpService"):JSONDecode(readfile(("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default.json")))
+end
+for i,v in next, config do 
+	if GuiLibrary["Objects"][i] then 
+		local API = GuiLibrary["Objects"][i]["API"]
+		local start_time = workspace:GetServerTimeNow()
+		if v.Type == "OptionsButton" and GuiLibrary["Objects"][i].Window == v.Window and not table.find(exclusionList, i) then 
+			if v.Enabled then
+				--print("LoadConfig", "Loading "..i.." as ".. tostring(v.Enabled))
+				API.Toggle(v.Enabled, false, false)
+			end
+			API.SetKeybind(v.Keybind)
+		elseif v.Type == "Slider" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
+			API.Set(tonumber(v.Value), true)
+		elseif v.Type == "Selector" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
+			API.Select(v.Value)
+		elseif v.Type == "Textbox" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
+			API.Set(v.Value)
+		elseif v.Type == "Toggle" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
+			if v.Enabled then 
+				API.Toggle(v.Enabled, true)
+			end
+		end
+		local time_diff = workspace:GetServerTimeNow() - start_time
+		if time_diff > 0.01 then
+			print("Loaded", i,"as", (v.Enabled~=nil and v.Enabled or v.Value), "in", time_diff)
+		end
+	end
+end
