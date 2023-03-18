@@ -727,7 +727,7 @@ else
 		load()
 	end
 end
-
+repeat task.wait() until shared.ConfigReady ~= nil
 GuiLibrary["LoadConfig"]("default")
 
 -- Future command system
@@ -780,7 +780,8 @@ GuiLibrary.Signals.onDestroy:connect(function()
 	end
 	if ontp then ontp:Disconnect() end
 	if leaving then leaving:Disconnect() end
-	shared.Future = nil
+	shared.Future = nil 
+	shared.ConfigReady = nil
 end)
 
 spawn(function()
