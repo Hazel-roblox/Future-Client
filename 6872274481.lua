@@ -23,50 +23,48 @@ knitRecieved, knit = pcall(function()
 		return debug.getupvalue(require(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerScripts.TS.knit).setup, 6)
 	until knitRecieved
 end)
-
+local events = {
+	HangGliderController = knit.Controllers["HangGliderController"],
+	SprintController = knit.Controllers["SprintController"],
+	JadeHammerController = knit.Controllers["JadeHammerController"],
+	PictureModeController = knit.Controllers["PictureModeController"],
+	SwordController = knit.Controllers["SwordController"],
+	GroundHit = game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit,
+	Reach = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]),
+	Knockback = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.damage["knockback-util"]).KnockbackUtil.calculateKnockbackVelocity, 1),
+	report = knit.Controllers["report-controller"]
+}
 --modules
 
 --Combat
 
-pcall(function()
-    local AuraRange = 18
-    local SwordEvent = {
-        SwordController = knit.Controllers["SwordController"]
-    }
-
+wrap(function()
     Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
         ["Name"] = "Aura",
         ["Function"] = function(callback) 
-            if callback then
-                pcall(function()
-                    wrap(function())
-                        repeat
-                            for i,v in pairs(game.Players:GetPlayers()) do
-                                if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
-                                    wrap(function()
-                                        if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
-                                            pcall(function()
-                                                lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
-                                            end)
-                                            SwordEvent["SwordController"]:swingSwordAtMouse()
-                                        end
+            wrap(function()
+                repeat
+					for i,v in pairs(game.Players:GetPlayers()) do
+						if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
+							wrap(function()
+								if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
+                                    pcall(function()
+                                        lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
                                     end)
-                                end
-                            end
-                            task.wait()
-                        until not Aura.Enabled
-                    end
-                end)
-			end
+									events["SwordController"]:swingSwordAtMouse()
+								end
+							end)
+						end
+					end
+					task.wait()
+				until not Aura.Enabled
+            end)
         end,
         ArrayText = function() return "18" end
     })
 end)
 
 wrap(function()
-    local SprintEvent = {
-        SprintController = knit.Controllers["SprintController"]
-    }
     AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
         ["Name"] = "AutoSprint",
         ["Function"] = function(callback) 
