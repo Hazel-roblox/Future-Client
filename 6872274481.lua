@@ -34,15 +34,11 @@ wrap(function()
     AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
         ["Name"] = "AutoSprint",
         ["Function"] = function(callback) 
-            if callback then
-                wrap(function()
-                    repeat task.wait()
-                        SprintEvent["SprintController"]:startSprinting()
-                    until not AutoSprint.Enabled
-                end)
-            else
-                SprintEvent["SprintController"]:stopSprinting()
-            end
+            wrap(function()
+                repeat task.wait()
+                     SprintEvent["SprintController"]:startSprinting()
+                 until not AutoSprint.Enabled
+             end)
         end,
         ArrayText = function() return "Packet" end
     })
@@ -88,10 +84,12 @@ NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
 	["Name"] = "NoFall",
 	["Function"] = function(callback) 
 		if callback then
-            repeat
-                game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit:FireServer()
-                task.wait(0.1)
-            until not NoFall.Enabled
+            pcall(function()
+                repeat
+                    game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit:FireServer()
+                    task.wait(0.1)
+                until not NoFall.Enabled
+            end)
         end
 	end,
 	ArrayText = function() return "Packet" end
