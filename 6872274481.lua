@@ -53,12 +53,13 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	ArrayText = function() return "Bedwars" end
 })
 
-NoFall = GuiLibrary.Objects.Miscellaneous.API.CreateOptionsButton({
+NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
 	["Name"] = "NoFall",
 	["Function"] = function(callback) 
 		if callback then
-            repeat task.wait(0.1)
+            repeat
                 game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit:FireServer()
+                task.wait(0.1)
             until not NoFall.Enabled
         end
 	end,
