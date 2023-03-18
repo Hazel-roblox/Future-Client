@@ -16,7 +16,38 @@ local function wrap(func)
 	end
 	coroutine.wrap(toWrap)()
 end
-print("Module")
+
+local knitRecieved, knit
+knitRecieved, knit = pcall(function()
+	repeat task.wait()
+		return debug.getupvalue(require(game:GetService("Players")[game.Players.LocalPlayer.Name].PlayerScripts.TS.knit).setup, 6)
+	until knitRecieved
+end)
+
+--modules
+
+--combat
+wrap(function()
+    local SprintEvent = {
+        SprintController = knit.Controllers["SprintController"]
+    }
+    AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
+        ["Name"] = "AutoSprint",
+        ["Function"] = function(callback) 
+            if callback then
+                wrap(function()
+                    repeat task.wait()
+                        SprintEvent["SprintController"]:startSprinting()
+                    until not AutoSprint.Enabled
+                end)
+            else
+                SprintEvent["SprintController"]:stopSprinting()
+            end
+        end,
+        ArrayText = function() return "Packet" end
+    })
+end)
+
 local Fly = {["Enabled"] = false}
 Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Name"] = "Fly",
@@ -50,7 +81,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
             Highjump.Toggle()
         end
 	end,
-	ArrayText = function() return "Bedwars" end
+	ArrayText = function() return "Bw" end
 })
 
 NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
