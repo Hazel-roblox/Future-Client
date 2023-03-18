@@ -721,12 +721,14 @@ if table.find(minerscaveidtable, game.PlaceId) then
 end
 
 local success2, _error2
+local normal = true
 if shared.FutureDeveloper == true and shared.FutureDeveloper ~= false and isfile("Future/FutureMain.lua") then
+	normal = false
 	loadstring(readfile("Future/FutureMain.lua"))()
-	return
 else
-	load()
-	return
+	if normal then
+		load()
+	end
 end
 
 GuiLibrary["LoadConfig"]("default")
