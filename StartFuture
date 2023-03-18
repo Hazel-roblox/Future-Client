@@ -1,5 +1,5 @@
 -- Credits to engo (engo#0320)
-
+print("lib")
 -- // New gui library for future roblox.
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
@@ -1252,13 +1252,15 @@ GuiLibrary["LoadOnlyGuiConfig"] = function()
         end
     end
 end
+print("work")
 GuiLibrary["LoadConfig"] = function(name) 
+	print(name)
     if shared.Future==nil or shared.Future.Destructing then return end
-    local name = "default"
+    local name = name or "default"
 	writefile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", "default") 
 	GuiLibrary["Debug"]("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default"..".json")
 	if betterisfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default"..".json") then 
-		print("[Future] Loading configuration ".."default")
+        print("[Future] Loading configuration ".."default")
 		log("LoadConfig", "Loading ".."default")
         local success, config = pcall(function() 
 			local x = readfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default"..".json")
