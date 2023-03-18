@@ -626,6 +626,13 @@ commands.toggle = {
 	Help = ".toggle <module-name> <state>"
 }
 
+local function save()
+	repeat task.wait(3)
+		if shared.Future == nil then return end
+		GuiLibrary["SaveConfig"](GuiLibrary["CurrentConfig"])
+	until shared.Future == nil
+end
+coroutine.wrap(save)()
 commands.font = {
 	Function = function(args) 
 
