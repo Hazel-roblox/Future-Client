@@ -119,8 +119,8 @@ local function getWeakestClosePlayer(max)
 end
 
 local function animate(animID)
-	local animation = Instance.new("Animation").AnimationId
-	animation = animID
+	local animation = Instance.new("Animation")
+	animation.AnimationId = animID
 	local animatior = lplr.Character.Humanoid:WaitForChild("Animator")
 	animatior:LoadAnimation(animation):Play()
 end
@@ -134,7 +134,7 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 					local target = getWeakestClosePlayer(18)
 					if target ~= nil then
 						local suc,v = pcall(function()
-							animate("rbxassetid://4947108314")
+							--animate("rbxassetid://4947108314")
 							events.SwordHit:FireServer({
 								["chargedAttack"] = {
 									["chargeRatio"] = 1
