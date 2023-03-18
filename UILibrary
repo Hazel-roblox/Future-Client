@@ -1036,6 +1036,7 @@ GuiLibrary["Debug"] = function(content)
 	print("[Future] [DEBUG] "..content)
 end
 GuiLibrary["SaveConfig"] = function(name, isAutosave) 
+	if not configLoaded then return end
 	if isfile("Future/configs/"..tostring(game.PlaceId).."/default.json") then
 		delfile("Future/configs/"..tostring(game.PlaceId).."/default.json")
 	end
@@ -1255,6 +1256,7 @@ GuiLibrary["LoadOnlyGuiConfig"] = function()
 		end
 	end
 end
+configLoaded = false
 GuiLibrary["LoadConfig"] = function(name) 
 	if shared.Future==nil or shared.Future.Destructing then return end
 	local name = name or "default"
@@ -1313,6 +1315,7 @@ GuiLibrary["LoadConfig"] = function(name)
 					end
 				end
 			end
+			configLoaded = true
 		else
 			warn("[Future] Failed to load "..tostring(shared.FuturePlaceId or game.PlaceId)..".json config file\nplease report this in the discord!\n("..config..")")
 		end
