@@ -28,7 +28,7 @@ end)
 
 --Combat
 
-wrap(function()
+pcall(function()
     local AuraToggle = false
     local AuraRange = 18
     local SwordEvent = {
@@ -40,22 +40,24 @@ wrap(function()
         ["Function"] = function(callback) 
             if callback then
                 AuraToggle = true
-                wrap(function()
-                    repeat
-                        for i,v in pairs(game.Players:GetPlayers()) do
-                            if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
-                                wrap(function()
-                                    if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
-                                        pcall(function()
-                                            lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
-                                        end)
-                                        SwordEvent["SwordController"]:swingSwordAtMouse()
-                                    end
-                                end)
+                pcall(function()
+                    wrap(function())
+                        repeat
+                            for i,v in pairs(game.Players:GetPlayers()) do
+                                if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
+                                    wrap(function()
+                                        if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
+                                            pcall(function()
+                                                lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
+                                            end)
+                                            SwordEvent["SwordController"]:swingSwordAtMouse()
+                                        end
+                                    end)
+                                end
                             end
-                        end
-                        task.wait()
-                    until not AuraEnabled
+                            task.wait()
+                        until not AuraEnabled
+                    end
                 end)
 			else
 				AuraToggle = false
