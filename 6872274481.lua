@@ -254,7 +254,7 @@ wrap(function()
 												CFrameAnimate2()
 											end
 				    					else
-											events["SwordController"]:swingSwordAtMouse()
+											SwordEvent["SwordController"]:swingSwordAtMouse()
 										end
 									end)
 								end
