@@ -56,7 +56,7 @@ pcall(function()
                                 end
                             end
                             task.wait()
-                        until not AuraEnabled
+                        until not AuraToggle
                     end
                 end)
 			else
