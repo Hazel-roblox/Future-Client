@@ -1284,15 +1284,13 @@ GuiLibrary["LoadConfig"] = function(name)
 				if GuiLibrary["Objects"][i] then 
 					local API = GuiLibrary["Objects"][i]["API"]
 					local start_time = WORKSPACE:GetServerTimeNow()
-					pcall(function()
-						print(v.Type,v.Enabled)
-					end)
 					if v.Type == "OptionsButton" and GuiLibrary["Objects"][i].Window == v.Window and not table.find(exclusionList, i) then 
 						if v.Enabled then
 							--print("LoadConfig", "Loading "..i.." as ".. tostring(v.Enabled))
 							API.Toggle(v.Enabled, false, false)
 						end
 						API.SetKeybind(v.Keybind)
+						print(tostring(i))
 					elseif v.Type == "Slider" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton and not table.find(exclusionList, v.OptionsButton) then
 						API.Set(tonumber(v.Value), true)
 					elseif v.Type == "Selector" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton and  not table.find(exclusionList, v.OptionsButton) then
