@@ -190,7 +190,7 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 							})
 						end)
 					else
-						local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
+						local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.15),{C0 = oldweld})
 						animation:Play()
 					end
 					task.wait(0.22)
@@ -219,7 +219,6 @@ AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 				pcall(function()
 					if lplr.Character ~= nil and lplr.Character.Humanoid.Health ~= 0 then
 						events["SprintController"]:startSprinting()
-
 					end
 				end)
 				task.wait()
@@ -229,23 +228,29 @@ AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 })
 
 --Movement
-
+local flyConnection
 local Flight = {["Enabled"] = false}
 Flight = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Name"] = "Flight",
 	["Function"] = function(callback) 
-		wrap(function()
-			repeat
-				lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,1.5,lplr.Character.PrimaryPart.Velocity.Z)
-				if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
-					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,60,lplr.Character.PrimaryPart.Velocity.Z)
-				end
-				if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftShift) then
-					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,-60,lplr.Character.PrimaryPart.Velocity.Z)
-				end
-				task.wait()
-			until not Flight.Enabled
-		end)
+		if callback then
+			wrap(function()
+				flyConnection = game["Run Service"].Heartbeat:Connect(function(delta)
+					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,0.1 * delta,lplr.Character.PrimaryPart.Velocity.Z)
+					if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+						lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,60,lplr.Character.PrimaryPart.Velocity.Z)
+					end
+					if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftShift) then
+						lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,-60,lplr.Character.PrimaryPart.Velocity.Z)
+					end
+					task.wait()
+				end)
+			end)
+		else
+			if flyConnection then
+				flyConnection:Disconnect()
+			end
+		end
 	end,
 	ArrayText = function() return "Velo" end
 })
