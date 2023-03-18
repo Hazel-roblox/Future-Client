@@ -122,7 +122,16 @@ print("[Future] Fail Hooked")
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/UILibrary", true))()
 
 shared.Future.GuiLibrary = GuiLibrary
-local getcustomasset = --[[getsynasset or getcustomasset or]] GuiLibrary["getRobloxAsset"]
+local getcustomasset = function(path) 
+        local name = path:split("/")[#path:split("/")]
+        if name == "arrow.png" then
+            return "rbxassetid://8904422926" 
+        elseif name == "gear.png" then
+            return "rbxassetid://8905804106"
+        elseif name == "click.mp3" then 
+            return "rbxassetid://535716488"
+        end
+    end
 GuiLibrary["LoadOnlyGuiConfig"]()
 
 
