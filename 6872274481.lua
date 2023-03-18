@@ -124,7 +124,26 @@ local function animate(animID)
 	local animatior = lplr.Character.Humanoid:WaitForChild("Animator")
 	animatior:LoadAnimation(animation):Play()
 end
-
+local AuraAnims = {
+	["Normal"] = {
+		{frame = CFrame.new(0.7, -0.4, 0.612) * CFrame.Angles(math.rad(285), math.rad(65), math.rad(293)),time = 0.3},
+		{frame = CFrame.new(0.61, -0.41, 0.6) * CFrame.Angles(math.rad(210), math.rad(70), math.rad(3)),time = 0.2},
+	},
+}
+local viewmodel = workspace.Camera.Viewmodel.RightHand.RightWrist
+local weld = viewmodel.C0
+local oldweld = viewmodel.C0
+local function getSelectedAuraAnim()
+	if #animTable > 0 then
+		for i,v in pairs(AuraAnims) do
+			if tostring(i) == AuraAnim.Value then
+				return v
+			end
+		end
+	end
+	return "None"
+end
+local auraAnimPlaying = false
 Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 	["Name"] = "Aura",
 	["Function"] = function(callback)
@@ -132,9 +151,20 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 			wrap(function()
 				repeat
 					local target = getWeakestClosePlayer(18)
+					local Anim = getSelectedAuraAnim()
 					if target ~= nil then
-						local suc,v = pcall(function()
-							--animate("rbxassetid://4947108314")
+						if Anim ~= "None" and not auraAnimPlaying then
+							wrap(function()
+								for i,v in pairs(Anim) do
+									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(v.time),{C0 = oldweld * v.frame})
+									animation:Play()
+									auraAnimPlaying = true
+									task.wait(v.time - 0.01)
+									auraAnimPlaying = false
+								end
+							end)
+						end
+						pcall(function()
 							events.SwordHit:FireServer({
 								["chargedAttack"] = {
 									["chargeRatio"] = 1
@@ -151,20 +181,25 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 								["weapon"] = getBestWeapon()
 							})
 						end)
-						if not suc then
-							print(suc," ",v)
-						end
 					end
 					task.wait(0.22)
 				until not Aura.Enabled
 			end)
-		else
-
 		end
 	end,
 	ArrayText = function() return "18" end
 })
-
+animTable = {}
+for i,v in pairs(AuraAnims) do
+	table.insert(animTable,tostring(i))
+end
+if #animTable > 0 then
+	AuraAnim = Aura.CreateSelector({
+		Name = "Anim",
+		Function = function(value) end,
+		List = animTable
+	})
+end
 AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 	["Name"] = "AutoSprint",
 	["Function"] = function(callback) 
