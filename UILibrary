@@ -1258,6 +1258,9 @@ end
 GuiLibrary["LoadConfig"] = function(name) 
 	if shared.Future==nil or shared.Future.Destructing then return end
 	local name = name or "default"
+	if isfile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name)  then
+		delfile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name) 
+	end
 	writefile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name) 
 	GuiLibrary["Debug"]("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/"..name..".json")
 	if betterisfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/"..name..".json") then 
@@ -1283,7 +1286,7 @@ GuiLibrary["LoadConfig"] = function(name)
 					end
 				end
 			end
-			for i,v in next, config do 
+			for i,v in pairs(config) do 
 				if GuiLibrary["Objects"][i] then 
 					local API = GuiLibrary["Objects"][i]["API"]
 					local start_time = WORKSPACE:GetServerTimeNow()
