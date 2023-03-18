@@ -768,8 +768,12 @@ else
 	return
 end
 
+local config = GuiLibrary["CurrentConfig"]
 
-GuiLibrary["LoadConfig"](GuiLibrary["CurrentConfig"])
+local function loadAfter()
+	task.wait(3)
+	GuiLibrary["LoadConfig"](config)
+end
 
 -- Future command system
 
