@@ -36,3 +36,5 @@ Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	end,
 	ArrayText = function() return "Velo" end
 })
+
+GuiLibrary["LoadConfig"](GuiLibrary["CurrentConfig"])
