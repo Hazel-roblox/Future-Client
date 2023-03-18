@@ -133,7 +133,7 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 				repeat
 					local target = getWeakestClosePlayer(18)
 					if target ~= nil then
-						pcall(function()
+						local suc,v = pcall(function()
 							animate("rbxassetid://4947108314")
 							events.SwordHit:FireServer({
 								["chargedAttack"] = {
@@ -151,6 +151,9 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 								["weapon"] = getBestWeapon()
 							})
 						end)
+						if not suc then
+							print(suc," ",v)
+						end
 					end
 					task.wait(0.22)
 				until not Aura.Enabled
