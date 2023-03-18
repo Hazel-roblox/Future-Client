@@ -49,7 +49,7 @@ wrap(function()
                                         pcall(function()
                                             lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
                                         end)
-                                        events["SwordController"]:swingSwordAtMouse()
+                                        SwordEvent["SwordController"]:swingSwordAtMouse()
                                     end
                                 end)
                             end
