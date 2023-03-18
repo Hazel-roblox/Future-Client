@@ -80,7 +80,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	ArrayText = function() return "Bw" end
 })
 
-NoFall = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
+NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
     ["Name"] = "NoFall",
     ["Function"] = function(callback) 
         pcall(function()
