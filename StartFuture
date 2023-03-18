@@ -727,7 +727,7 @@ else
 		load()
 	end
 end
-repeat task.wait() until shared.ConfigReady ~= nil
+repeat task.wait(1) until shared.ConfigReady ~= nil
 GuiLibrary["LoadConfig"]("default")
 
 -- Future command system
@@ -833,3 +833,5 @@ fprint("Finished loading in "..tostring(math.floor((game:GetService("Workspace")
 shared._FUTURECACHED = true
 local starttick = 1679150647.768157
 fprint("Last update was "..tick() - starttick.." seconds ago")
+task.wait(1)
+GuiLibrary["LoadConfig"]("default")
