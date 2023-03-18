@@ -14,7 +14,7 @@ local function wrap(func)
 	end
 	coroutine.wrap(toWrap)()
 end
-
+print("Module")
 local Fly = {["Enabled"] = false}
 Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Name"] = "Fly",
