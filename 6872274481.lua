@@ -29,7 +29,6 @@ end)
 --Combat
 
 pcall(function()
-    local AuraToggle = false
     local AuraRange = 18
     local SwordEvent = {
         SwordController = knit.Controllers["SwordController"]
@@ -39,7 +38,6 @@ pcall(function()
         ["Name"] = "Aura",
         ["Function"] = function(callback) 
             if callback then
-                AuraToggle = true
                 pcall(function()
                     wrap(function())
                         repeat
@@ -56,11 +54,9 @@ pcall(function()
                                 end
                             end
                             task.wait()
-                        until not AuraToggle
+                        until not Aura.Enabled
                     end
                 end)
-			else
-				AuraToggle = false
 			end
         end,
         ArrayText = function() return "18" end
