@@ -270,7 +270,7 @@ wrap(function()
 				end)
 			end
         end,
-        ArrayText = function() return "Packet" end
+        ArrayText = function() return "18" end
     })
 end)
 
