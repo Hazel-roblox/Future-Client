@@ -219,10 +219,6 @@ local function getasset(path)
 end
 
 local function getscript(id) 
-	if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
-		loadstring(readfile("Future/FutureMain.lua"))()
-		return
-	end
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
 end
 
@@ -724,9 +720,14 @@ if table.find(minerscaveidtable, game.PlaceId) then
 	shared.FuturePlaceId = 6604417568
 end
 
-
+local success2, _error2
 local success, _error = pcall(getscript, "Universal")
-local success2, _error2 = pcall(getscript)
+if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
+	loadstring(readfile("Future/FutureMain.lua"))()
+else
+	success2, _error2 = pcall(getscript)
+end
+
 local success3, _error3 = pcall(getplusscript)
 local success4, _error4 = pcall(getcustomscripts)
 if success then 
@@ -736,7 +737,7 @@ else
 	GuiLibrary.Signals.onDestroy:Fire()
 	return
 end
-if success2 then 
+if success2 ~= nil then 
 	print("[Future] Successfully retrieved Game script!")
 else
 	fwarn("Unsuccessful attempt at retrieving Game script!\n report this in the discord.\n (".._error2..")")
