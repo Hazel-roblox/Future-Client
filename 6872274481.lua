@@ -38,45 +38,41 @@ local events = {
 
 --Combat
 
-wrap(function()
-    Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
-        ["Name"] = "Aura",
-        ["Function"] = function(callback) 
-            wrap(function()
-                repeat
-					for i,v in pairs(game.Players:GetPlayers()) do
-						if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
-							wrap(function()
-								if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
-                                    pcall(function()
-                                        lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
-                                    end)
-									events["SwordController"]:swingSwordAtMouse()
-								end
-							end)
-						end
+Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
+    ["Name"] = "Aura",
+    ["Function"] = function(callback) 
+        wrap(function()
+            repeat
+				for i,v in pairs(game.Players:GetPlayers()) do
+					if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
+						wrap(function()
+							if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
+                                pcall(function()
+                                    lplr.Character.PrimaryPart.CFrame = CFrame.lookAt(lplr.Character.PrimaryPart.Position,Vector3.new(v.Character.PrimaryPart.Position.X,lplr.Character.PrimaryPart.Position.Y,v.Character.PrimaryPart.Position.Z))
+                                end)
+								events["SwordController"]:swingSwordAtMouse()
+							end
+						end)
 					end
-					task.wait()
-				until not Aura.Enabled
-            end)
-        end,
-        ArrayText = function() return "18" end
-    })
-end)
+				end
+				task.wait()
+			until not Aura.Enabled
+        end)
+    end,
+    ArrayText = function() return "18" end
+})
 
-wrap(function()
-    AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
-        ["Name"] = "AutoSprint",
-        ["Function"] = function(callback) 
-            wrap(function()
-                repeat task.wait()
-                     SprintEvent["SprintController"]:startSprinting()
-                 until not AutoSprint.Enabled
-             end)
-        end,
-        ArrayText = function() return "Packet" end
-    })
-end)
+AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
+    ["Name"] = "AutoSprint",
+    ["Function"] = function(callback) 
+        wrap(function()
+            repeat task.wait()
+                events["SprintController"]:startSprinting()
+             until not AutoSprint.Enabled
+         end)
+    end,
+    ArrayText = function() return "Packet" end
+})
 
 --Movement
 
