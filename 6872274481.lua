@@ -30,7 +30,6 @@ end)
 
 wrap(function()
     local AuraToggle = false
-	local lasthit = 0
     local SwordEvent = {
         SwordController = knit.Controllers["SwordController"]
     }
