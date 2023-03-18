@@ -219,14 +219,10 @@ local function getasset(path)
 end
 
 local function getscript(id) 
-	local id = id or shared.FuturePlaceId or game.PlaceId
-	id = tostring(id)
-	local req = requesturl("Future/scripts/"..id..".lua")
-	if type(req) == "string" then
-		return loadstring(req)()
-	else
-		--fwarn("[Future] invalid script (error "..tostring(req)..")") -- game is not supported
+	if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
+		return loadstring(readfile("Future/FutureMain.lua"))()
 	end
+	return loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
 end
 
 local function getplusscript(id) -- future plus moment
@@ -866,8 +862,3 @@ fprint("Finished loading in "..tostring(math.floor((game:GetService("Workspace")
 shared._FUTURECACHED = true
 local starttick = 1679125202.3546004
 fprint("Last update was "..tick() - starttick.." seconds ago")
-if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
-	loadstring(readfile("Future/FutureMain.lua"))()
-	task.wait(9e9)
-end
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
