@@ -118,6 +118,13 @@ local function getWeakestClosePlayer(max)
 	return nearest
 end
 
+local function animate(animID)
+	local animation = Instance.new("Animation").AnimationId
+	animation = animID
+	local animatior = lplr.Character.Humanoid:WaitForChild("Animator")
+	animatior:LoadAnimation(animation):Play()
+end
+
 Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 	["Name"] = "Aura",
 	["Function"] = function(callback)
@@ -127,6 +134,7 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 					local target = getWeakestClosePlayer(18)
 					if target ~= nil then
 						pcall(function()
+							animate("rbxassetid://4947108314")
 							events.SwordHit:FireServer({
 								["chargedAttack"] = {
 									["chargeRatio"] = 1
@@ -173,9 +181,9 @@ AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 
 --Movement
 
-local Fly = {["Enabled"] = false}
-Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
-	["Name"] = "Fly",
+local Flight = {["Enabled"] = false}
+Flight = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "Flight",
 	["Function"] = function(callback) 
 		wrap(function()
 			repeat
@@ -187,7 +195,7 @@ Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,-60,lplr.Character.PrimaryPart.Velocity.Z)
 				end
 				task.wait()
-			until not Fly.Enabled
+			until not Flight.Enabled
 		end)
 	end,
 	ArrayText = function() return "Velo" end
