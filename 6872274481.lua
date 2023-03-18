@@ -156,14 +156,18 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 				repeat
 					local target = getWeakestClosePlayer(18)
 					local Anim = getSelectedAuraAnim()
+					local totalAnimTime = 0
 					if target ~= nil then
 						if Anim ~= "None" and not auraAnimPlaying then
 							wrap(function()
 								for i,v in pairs(Anim) do
+									totalAnimTime += v.time
+								end
+								for i,v in pairs(Anim) do
 									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(v.time),{C0 = oldweld * v.frame})
 									animation:Play()
 									auraAnimPlaying = true
-									task.wait(v.time - 0.01)
+									task.wait(totalAnimTime + 0.01)
 									auraAnimPlaying = false
 									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
 									animation:Play()
