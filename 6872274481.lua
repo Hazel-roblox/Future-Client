@@ -46,6 +46,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
                 wait(0.00001)
                 lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
             end
+            wait(1)
             Highjump.Toggle()
         end
 	end,
