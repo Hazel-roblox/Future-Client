@@ -41,7 +41,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Name"] = "Highjump",
 	["Function"] = function(callback) 
 		if callback then
-            for i=1, 50 do
+            for i=1, 55 do
                 lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,11.7,0)
                 wait(0.00001)
                 lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
@@ -51,6 +51,18 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
         end
 	end,
 	ArrayText = function() return "Bedwars" end
+})
+
+NoFall = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "NoFall",
+	["Function"] = function(callback) 
+		if callback then
+            repeat task.wait(0.1)
+                game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.GroundHit:FireServer()
+            until not NoFall.Enabled
+        end
+	end,
+	ArrayText = function() return "Packet" end
 })
 
 --[[
