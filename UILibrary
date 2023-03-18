@@ -1260,19 +1260,16 @@ configLoaded = false
 GuiLibrary["LoadConfig"] = function(name) 
 	if shared.Future==nil or shared.Future.Destructing then return end
 	local name = name or "default"
-	if isfile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name)  then
-		delfile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name) 
-	end
-	writefile("Future/configs/!SelectedConfigs/"..tostring(shared.FuturePlaceId or game.PlaceId)..".txt", name) 
 	GuiLibrary["Debug"]("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/"..name..".json")
-	if betterisfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/"..name..".json") then 
+	if betterisfile("Future/configs/"..tostring(game.PlaceId).."/"..name..".json") then 
 		print("[Future] Loading configuration "..name)
 		log("LoadConfig", "Loading "..name)
-		local success, config = pcall(function() 
-			local x = readfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/"..name..".json")
-			return HTTPSERVICE:JSONDecode(x)
+		local x = readfile("Future/configs/"..tostring(game.PlaceId).."/"..name..".json")
+		local suc, val = pcall(function()
+			local config = HTTPSERVICE:JSONDecode(x)
 		end)
-		if success then 
+
+		if suc then 
 			print("[Future] Success loading configuration "..name)
 			-- // turn off all modules incase they are switching configs (to prevent the old configs settings staying)
 			for i,v in next, GuiLibrary.Objects do 
