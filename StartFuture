@@ -218,7 +218,7 @@ local function getasset(path)
 	return getcustomasset(path) 
 end
 
-local function getscript(id) 
+local function load() 
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
 end
 
@@ -721,44 +721,13 @@ if table.find(minerscaveidtable, game.PlaceId) then
 end
 
 local success2, _error2
-local success, _error = pcall(getscript, "Universal")
-if shared.FutureDeveloper == true and betterisfile("Future/FutureMain.lua") then
+if shared.FutureDeveloper == true and shared.FutureDeveloper ~= false and isfile("Future/FutureMain.lua") then
 	loadstring(readfile("Future/FutureMain.lua"))()
+	return
 else
-	success2, _error2 = pcall(getscript)
-end
-
-local success3, _error3 = pcall(getplusscript)
-local success4, _error4 = pcall(getcustomscripts)
-if success then 
-	print("[Future] Successfully retrieved Universal script!")
-else
-	fwarn("Unsuccessful attempt at retrieving Universal script!\n report this in the discord.\n (".._error..")")
-	GuiLibrary.Signals.onDestroy:Fire()
+	load()
 	return
 end
-if success2 ~= nil then 
-	print("[Future] Successfully retrieved Game script!")
-else
-	fwarn("Unsuccessful attempt at retrieving Game script!\n report this in the discord.\n (".._error2..")")
-	GuiLibrary.Signals.onDestroy:Fire()
-	return
-end
-if success3 then 
-	print("[Future] Successfully retrieved FuturePlus Game script!")
-else
-	fwarn("Unsuccessful attempt at retrieving FuturePlus Game script!\n (".._error3..")")
-	GuiLibrary.Signals.onDestroy:Fire()
-	return
-end
-if success4 then 
-	print("[Future] Successfully loaded all custom scripts!")
-else
-	fwarn("Unsuccessful attempt at loading custom scripts!\n (".._error4..")")
-	GuiLibrary.Signals.onDestroy:Fire()
-	return
-end
-
 
 GuiLibrary["LoadConfig"]("default")
 
