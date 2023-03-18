@@ -199,18 +199,18 @@ end
 local aurabind
 wrap(function()
     local AuraToggle = false
-		local animrunning = false
-		local lasthit = 0
-		local function starthittimer()
-			runfunc(function()
-				for i = 1,5 do task.wait(0.025)
-					lasthit -= 1
-				end
-			end)
-		end
-		local function IsFirstPerson()
-			return (lplr.Character:WaitForChild("Head").CFrame.p - workspace.CurrentCamera.CFrame.p).Magnitude < 2
-		end
+	local animrunning = false
+	local lasthit = 0
+	local function starthittimer()
+		runfunc(function()
+			for i = 1,5 do task.wait(0.025)
+				lasthit -= 1
+			end
+		end)
+	end
+	local function IsFirstPerson()
+		return (lplr.Character:WaitForChild("Head").CFrame.p - workspace.CurrentCamera.CFrame.p).Magnitude < 2
+	end
     local SwordEvent = {
         SwordController = knit.Controllers["SwordController"]
     }
