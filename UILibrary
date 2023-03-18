@@ -1036,7 +1036,6 @@ GuiLibrary["Debug"] = function(content)
 	print("[Future] [DEBUG] "..content)
 end
 GuiLibrary["SaveConfig"] = function(name, isAutosave) 
-	if not configLoaded then return end
 	if isfile("Future/configs/"..tostring(game.PlaceId).."/default.json") then
 		delfile("Future/configs/"..tostring(game.PlaceId).."/default.json")
 	end
