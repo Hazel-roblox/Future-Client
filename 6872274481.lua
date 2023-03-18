@@ -93,7 +93,7 @@ end
 
 local function canAttack(plr : Player)
 	if lplr.Team.Name:lower() ~= "spectator" or lplr.Team.Name:lower() ~= "spectators" then
-		if lplr.Team == plr.Team or plr == lplr then
+		if lplr.Team == plr.Team or plr == lplr and plr.Character.Health > 0 then
 			return false
 		end
 	end
