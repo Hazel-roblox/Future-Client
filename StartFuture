@@ -692,12 +692,7 @@ end)
 local ontp = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
 	if State == Enum.TeleportState.Started then
 		local stringtp = [[
-        repeat wait() until game:IsLoaded()
-        if shared.FutureDeveloper then 
-            loadfile("Future/Initiate.lua")() 
-        else 
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/joeengo/Future/main/Initiate.lua", true))() 
-        end
+        
         ]]
 		queueteleport(stringtp)
 	end
@@ -725,8 +720,10 @@ local normal = true
 if shared.FutureDeveloper == true and shared.FutureDeveloper ~= false and isfile("Future/FutureMain.lua") then
 	normal = false
 	loadstring(readfile("Future/FutureMain.lua"))()
+	fprint("Dev Mode Loaded")
 else
 	if normal then
+		fprint("Normal Mode Loaded")
 		load()
 	end
 end
