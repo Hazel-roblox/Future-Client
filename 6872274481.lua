@@ -126,6 +126,10 @@ local function animate(animID)
 end
 local AuraAnims = {
 	["Normal"] = {
+		{frame = CFrame.new(0.7, -0.4, 0.612) * CFrame.Angles(math.rad(285), math.rad(65), math.rad(293)),time = 0.1},
+		{frame = CFrame.new(0.61, -0.41, 0.6) * CFrame.Angles(math.rad(210), math.rad(70), math.rad(3)),time = 0.08},
+	},
+	["Slow"] = {
 		{frame = CFrame.new(0.7, -0.4, 0.612) * CFrame.Angles(math.rad(285), math.rad(65), math.rad(293)),time = 0.3},
 		{frame = CFrame.new(0.61, -0.41, 0.6) * CFrame.Angles(math.rad(210), math.rad(70), math.rad(3)),time = 0.2},
 	},
@@ -161,6 +165,8 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 									auraAnimPlaying = true
 									task.wait(v.time - 0.01)
 									auraAnimPlaying = false
+									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
+									animation:Play()
 								end
 							end)
 						end
