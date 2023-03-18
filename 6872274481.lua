@@ -170,8 +170,6 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 									animation.Completed:Wait()
 								end
 								auraAnimPlaying = false
-								local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
-								animation:Play()
 							end)
 						end
 						pcall(function()
@@ -191,6 +189,9 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 								["weapon"] = getBestWeapon()
 							})
 						end)
+					else
+						local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
+						animation:Play()
 					end
 					task.wait(0.22)
 				until not Aura.Enabled
