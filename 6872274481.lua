@@ -42,35 +42,14 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Function"] = function(callback) 
 		if callback then
             for i=1, 50 do
-                lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,HighjumpVelo1["Value"],0)
+                lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,11.7,0)
                 wait(0.00001)
-                lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,HighjumpVelo2["Value"],0)
+                lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
             end
             Highjump.Toggle()
         end
 	end,
 	ArrayText = function() return "Bedwars" end
-})
-HighjumpVelo1 = Aura.CreateSlider({
-    Name = "HighjumpVelocity1",
-    Function = function(value) end,
-    Min = 1,
-    Max = 20,
-    Default = 11.7
-})
-HighjumpVelo2 = Aura.CreateSlider({
-    Name = "HighjumpVelocity2",
-    Function = function(value) end,
-    Min = 1,
-    Max = 20,
-    Default = 18
-})
-RepeatTimes = Aura.CreateSlider({
-    Name = "RepeatTimes",
-    Function = function(value) end,
-    Min = 1,
-    Max = 55,
-    Default = 50
 })
 
 --[[
