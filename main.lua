@@ -1,10 +1,9 @@
 repeat task.wait() until game:IsLoaded()
 local Future = shared.Future
-local GuiLibrary = Future.GuiLibrary
 repeat task.wait()
 	Future = shared.Future
-	GuiLibrary = Future.GuiLibrary
-until GuiLibrary ~= nil
+until Future ~= nil
+local GuiLibrary = Future.GuiLibrary
 local lplr = game.Players.LocalPlayer
 local mouse = lplr:GetMouse()
 local cam = workspace.CurrentCamera
