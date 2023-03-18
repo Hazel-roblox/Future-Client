@@ -167,11 +167,11 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(v.time),{C0 = oldweld * v.frame})
 									animation:Play()
 									auraAnimPlaying = true
-									task.wait(totalAnimTime + 0.01)
-									auraAnimPlaying = false
-									local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
-									animation:Play()
+									animation.Completed:Wait()
 								end
+								auraAnimPlaying = false
+								local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.05),{C0 = oldweld})
+								animation:Play()
 							end)
 						end
 						pcall(function()
