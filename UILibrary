@@ -1036,8 +1036,8 @@ GuiLibrary["Debug"] = function(content)
 	print("[Future] [DEBUG] "..content)
 end
 GuiLibrary["SaveConfig"] = function(name, isAutosave) 
-	if isfile("Future/configs/!SelectedConfigs/"..tostring(game.PlaceId).."/default.json") then
-		delfile("Future/configs/!SelectedConfigs/"..tostring(game.PlaceId).."/default.json")
+	if isfile("Future/configs/"..tostring(game.PlaceId).."/default.json") then
+		delfile("Future/configs/"..tostring(game.PlaceId).."/default.json")
 	end
 	if shared.Future==nil or shared.Future.Destructing then return end
 	local name = (name == nil or name == "") and "default" or name
