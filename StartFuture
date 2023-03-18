@@ -870,4 +870,4 @@ spawn(function()
 end)
 fprint("Finished loading in "..tostring(math.floor((game:GetService("Workspace"):GetServerTimeNow() - startTime) * 1000) / 1000).."s\nPress "..GuiLibrary["GuiKeybind"].." to open the Gui.\nPlease join the discord for changelogs and to report bugs. \ndiscord.gg/bdjT5UmmDJ\nEnjoy using Future v"..shared._FUTUREVERSION.."")
 shared._FUTURECACHED = true
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/main.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/6872274481.lua", true))()
