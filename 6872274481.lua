@@ -40,21 +40,23 @@ local events = {
 
 Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
     ["Name"] = "Aura",
-    ["Function"] = function(callback) 
-        wrap(function()
+    ["Function"] = function(callback)
+        if callback then
             repeat
 				for i,v in pairs(game.Players:GetPlayers()) do
-					if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
+                    if (v.Character) and (game.Players.LocalPlayer.Character) and v ~= game.Players.LocalPlayer then
 						pcall(function()
-							if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < AuraRange and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
+							if (v.Character.PrimaryPart.Position - lplr.Character.PrimaryPart.Position).Magnitude < 16 and v.Character.Humanoid.health > 1 and lplr.Character.Humanoid.Health > 1 and v.Team ~= lplr.Team then
 								events["SwordController"]:swingSwordAtMouse()
 							end
 						end)
 					end
-				end
-				task.wait()
-			until not Aura.Enabled
-        end)
+                end
+                task.wait(0.01)
+            until not Aura.Enabled
+        else
+
+        end
     end,
     ArrayText = function() return "18" end
 })
