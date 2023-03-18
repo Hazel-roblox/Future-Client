@@ -198,7 +198,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 	["Function"] = function(callback) 
 		wrap(function()
 			repeat task.wait(0.1)
-				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,11.7,0)
+				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,60.7,0)
 				wait(0.00001)
 				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
 			until not Highjump.Enabled
