@@ -218,51 +218,53 @@ wrap(function()
         ["Name"] = "Aura",
         ["Function"] = function(callback) 
             if callback then
-                AuraToggle = true
-				local function StartAura()
-					if not AuraToggle then return end
-					runfunc(function()
-					    aurabind = game:GetService("RunService").RenderStepped:Connect(function()
-						    local nearest = nearestUser(20)
-						    if nearest and nearest.Character and nearest.Character.Humanoid.Health > 0 then
-								if getPriority(nearest.UserId) <= getPriority(lplr.UserId) then
-									runfunc(function()
-										local sword = getBestWeapon()
-										game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.SwordHit:FireServer({
-											["chargedAttack"] = {
-												["chargeRatio"] = 0.8
-											},
-											["entityInstance"] = nearest.Character,
-											["validate"] = {
-												["targetPosition"] = {
-													["value"] = nearest.Character.PrimaryPart.Position
-												},
-												["selfPosition"] = {
-													["value"] = lplr.Character.PrimaryPart.Position
-												}
-											},
-											["weapon"] = sword
-										})
-									end)
-									runfunc(function()
-										if IsFirstPerson() then
-											if not animrunning then
-												animrunning = true
-												CFrameAnimate(anim)
-												task.wait(0.29)
-												animrunning = false
-												CFrameAnimate2()
-											end
-				    					else
-											SwordEvent["SwordController"]:swingSwordAtMouse()
-										end
-									end)
-								end
-							end
-						end)
-					end)
-				end
-				StartAura()
+                pcall(function()
+                    AuraToggle = true
+                    local function StartAura()
+                        if not AuraToggle then return end
+                        runfunc(function()
+                            aurabind = game:GetService("RunService").RenderStepped:Connect(function()
+                                local nearest = nearestUser(20)
+                                if nearest and nearest.Character and nearest.Character.Humanoid.Health > 0 then
+                                    if getPriority(nearest.UserId) <= getPriority(lplr.UserId) then
+                                        runfunc(function()
+                                            local sword = getBestWeapon()
+                                            game:GetService("ReplicatedStorage").rbxts_include.node_modules:FindFirstChild("@rbxts").net.out._NetManaged.SwordHit:FireServer({
+                                                ["chargedAttack"] = {
+                                                    ["chargeRatio"] = 0.8
+                                                },
+                                                ["entityInstance"] = nearest.Character,
+                                                ["validate"] = {
+                                                    ["targetPosition"] = {
+                                                        ["value"] = nearest.Character.PrimaryPart.Position
+                                                    },
+                                                    ["selfPosition"] = {
+                                                        ["value"] = lplr.Character.PrimaryPart.Position
+                                                    }
+                                                },
+                                                ["weapon"] = sword
+                                            })
+                                        end)
+                                        runfunc(function()
+                                            if IsFirstPerson() then
+                                                if not animrunning then
+                                                    animrunning = true
+                                                    CFrameAnimate(anim)
+                                                    task.wait(0.29)
+                                                    animrunning = false
+                                                    CFrameAnimate2()
+                                                end
+                                            else
+                                                SwordEvent["SwordController"]:swingSwordAtMouse()
+                                            end
+                                        end)
+                                    end
+                                end
+                            end)
+                        end)
+                    end
+				    StartAura()
+                end)
 			else
 				AuraToggle = false
 				pcall(function()
