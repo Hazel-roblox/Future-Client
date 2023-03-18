@@ -122,7 +122,7 @@ print("[Future] Fail Hooked")
 local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Future-Client/main/UILibrary", true))()
 
 shared.Future.GuiLibrary = GuiLibrary
-local getcustomasset = --[[getsynasset or getcustomasset or]] GuiLibrary["getRobloxAsset"]
+local getcustomasset = GuiLibrary["getRobloxAsset"]
 GuiLibrary["LoadOnlyGuiConfig"]()
 
 
