@@ -159,8 +159,12 @@ AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 	["Function"] = function(callback) 
 		wrap(function()
 			repeat
-				events["SprintController"]:startSprinting()
-				task.wait()
+				pcall(function()
+					if lplr.Character ~= nil and lplr.Character.Humanoid.Health ~= 0 then
+						events["SprintController"]:startSprinting()
+						task.wait()
+					end
+				end)
 			until not AutoSprint.Enabled
 		end)
 	end,
