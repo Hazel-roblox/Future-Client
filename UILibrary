@@ -133,7 +133,7 @@ local function requesturl(url, bypass)
     if betterisfile(url) then 
         return readfile(url)
     end
-    local repourl = bypass and "https://raw.githubusercontent.com/joeengo/" or "https://raw.githubusercontent.com/joeengo/Future/main/"
+    local repourl = bypass and "https://github.com/Hazel-roblox"
 
     local req = requestfunc({
         Url = repourl..url,
