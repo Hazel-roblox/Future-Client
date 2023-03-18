@@ -7,15 +7,28 @@ local cam = workspace.CurrentCamera
 local getcustomasset = GuiLibrary.getRobloxAsset
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
-
-local TEST = {["Enabled"] = false}
-TEST = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
-        ["Name"] = "TEST",
-        ["Function"] = function(callback) 
-            if callback then 
-               print(callback)
-            end
-        end,
-        ArrayText = function() return "TEST" end
-    })
+local function wrap(func)
+	local function toWrap()
+		func()
+	end
+	coroutine.wrap(toWrap)()
 end
+
+local Fly = {["Enabled"] = false}
+Fly = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "Fly",
+	["Function"] = function(callback) 
+		wrap(function()
+			repeat task.wait()
+				lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,1.5,lplr.Character.PrimaryPart.Velocity.Z)
+				if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,60,lplr.Character.PrimaryPart.Velocity.Z)
+				end
+				if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftShift) then
+					lplr.Character.PrimaryPart.Velocity = Vector3.new(lplr.Character.PrimaryPart.Velocity.X,-60,lplr.Character.PrimaryPart.Velocity.Z)
+				end
+			until not Fly.Enabled
+		end)
+	end,
+	ArrayText = function() return "Velo" end
+})
