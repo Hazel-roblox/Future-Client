@@ -262,7 +262,7 @@ Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 		wrap(function()
 			repeat
 				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,26,0)
-				wait(0.1)
+				wait(0.01)
 				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
 			until not Highjump.Enabled
 		end)
@@ -277,7 +277,7 @@ NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
 		pcall(function()
 			repeat
 				events["GroundHit"]:FireServer()
-				task.wait(0.1)
+				task.wait(0.03)
 			until not NoFall.Enabled
 		end)
 	end,
