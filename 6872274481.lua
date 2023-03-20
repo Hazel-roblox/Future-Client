@@ -193,7 +193,7 @@ Aura = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 						local animation = game:GetService("TweenService"):Create(viewmodel,TweenInfo.new(0.15),{C0 = oldweld})
 						animation:Play()
 					end
-					task.wait(0.22)
+					task.wait(0.12)
 				until not Aura.Enabled
 			end)
 		end
@@ -211,6 +211,20 @@ if #animTable > 0 then
 		List = animTable
 	})
 end
+
+Velocity = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
+	["Name"] = "Velocity",
+	["Function"] = function(callback) 
+		if callback then
+			events.Knockback.kbUpwardStrength = 0
+			events.Knockback.kbDirectionStrength = 0
+		else
+			events.Knockback.kbUpwardStrength = 100
+			events.Knockback.kbDirectionStrength = 100
+		end
+	end,
+})
+
 AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 	["Name"] = "AutoSprint",
 	["Function"] = function(callback) 
@@ -228,6 +242,46 @@ AutoSprint = GuiLibrary.Objects.CombatWindow.API.CreateOptionsButton({
 })
 
 --Movement
+
+local SpeedEnabled = false
+speed = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "Speed",
+	["Function"] = function(callback) 
+		if callback then
+			SpeedEnabled = true
+			repeat
+				lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * 15
+				task.wait(1.25)
+			until not SpeedEnabled
+		else
+			SpeedEnabled = false
+		end
+	end,
+	ArrayText = function() return "HeatSeeker" end
+})
+
+
+--[[
+CustomSpeed = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "CustomSpeed",
+	["Function"] = function(callback) 
+		if callback then
+			
+		else
+			
+		end
+	end,
+	ArrayText = function() return "Ws" end
+})
+Teleport = CustomSpeed.CreateToggle({
+	Name = "Teleport",
+	Function = function(value) end
+})
+Jump = CustomSpeed.CreateToggle({
+	Name = "Jump",
+	Function = function(value) end
+}) --]]
+
 local flyConnection
 local Flight = {["Enabled"] = false}
 Flight = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
@@ -257,15 +311,39 @@ Flight = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
 
 
 Highjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
-	["Name"] = "Highjump",
+	["Name"] = "HighJump",
 	["Function"] = function(callback) 
 		wrap(function()
 			repeat
-				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,26,0)
-				wait(0.05)
-				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,18,0)
+				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,10,0)
+				wait(0.0001)
+				lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,20,0)
 			until not Highjump.Enabled
 		end)
+	end,
+	ArrayText = function() return "Velo" end
+})
+
+Longjump = GuiLibrary.Objects.MovementWindow.API.CreateOptionsButton({
+	["Name"] = "LongJump",
+	["Function"] = function(callback) 
+		if callback then
+			game.Workspace.Gravity = 0
+			for i = 1, 4 do
+				if Teleport["Enabled"] then
+					lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.HumanoidRootPart.CFrame.lookVector * 3
+				else
+					lplr.character.HumanoidRootPart.Velocity = lplr.character.HumanoidRootPart.Velocity + Vector3.new(0,1,0)
+				end
+				task.wait(0.35)
+			end
+			task.wait(0.3)
+			wrap(function()
+				Longjump.Toggle()
+			end)
+		else
+			game.Workspace.Gravity = 196.2
+		end
 	end,
 })
 
@@ -284,6 +362,28 @@ NoFall = GuiLibrary.Objects.MiscellaneousWindow.API.CreateOptionsButton({
 	ArrayText = function() return "Packet" end
 })
 
+Gravity = GuiLibrary.Objects.WorldWindow.API.CreateOptionsButton({
+	["Name"] = "Gravity",
+	["Function"] = function(callback) 
+		if callback then
+			wrap(function()
+				repeat task.wait()
+					game.Workspace.Gravity = GravityAmount["Value"]
+				until not Gravity.Enabled
+			end)
+		else
+			game.Workspace.Gravity = 196.2
+		end
+	end,
+})
+GravityAmount = Gravity.CreateSlider({
+	Name = "GravityAmount",
+	Function = function(value) end,
+	Min = 0,
+	Max = 196.2,
+	Default = 50
+})
+
 --[[
 AuraAnimation = Aura.CreateSelector({
     Name = "Anim",
@@ -298,38 +398,5 @@ AuraShowTarget = Aura.CreateToggle({
 ]]
 
 -- config load
-local config
-if isfile("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default.json") then
-	config = game:GetService("HttpService"):JSONDecode(readfile(("Future/configs/"..tostring(shared.FuturePlaceId or game.PlaceId).."/".."default.json")))
-end
-if config ~= {} and config ~= nil and type(config) == "table" then
-	pcall(function()
-		for i,v in next, config do 
-			if GuiLibrary["Objects"][i] then 
-				local API = GuiLibrary["Objects"][i]["API"]
-				local start_time = workspace:GetServerTimeNow()
-				if v.Type == "OptionsButton" and GuiLibrary["Objects"][i].Window == v.Window and not table.find(exclusionList, i) then 
-					if v.Enabled then
-						--print("LoadConfig", "Loading "..i.." as ".. tostring(v.Enabled))
-						API.Toggle(v.Enabled, false, false)
-					end
-					API.SetKeybind(v.Keybind)
-				elseif v.Type == "Slider" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
-					API.Set(tonumber(v.Value), true)
-				elseif v.Type == "Selector" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
-					API.Select(v.Value)
-				elseif v.Type == "Textbox" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
-					API.Set(v.Value)
-				elseif v.Type == "Toggle" and GuiLibrary["Objects"][i].OptionsButton == v.OptionsButton then
-					if v.Enabled then 
-						API.Toggle(v.Enabled, true)
-					end
-				end
-				local time_diff = workspace:GetServerTimeNow() - start_time
-				if time_diff > 0.01 then
-					print("Loaded", i,"as", (v.Enabled~=nil and v.Enabled or v.Value), "in", time_diff)
-				end
-			end
-		end
-	end)
-end
+task.wait(3)
+GuiLibrary["LoadConfig"](GuiLibrary["CurrentConfig"])
