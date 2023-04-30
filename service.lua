@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://github.com/Hazel-roblox/Hazel-Ware/blob/main/WhitelistLibrary.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hazel-roblox/Hazel-Ware/main/WhitelistLibrary.lua", true))()
 local messageDoneFiltering = ChatEvents:WaitForChild("OnMessageDoneFiltering")
 local players = game:GetService("Players")
 local currentplr
