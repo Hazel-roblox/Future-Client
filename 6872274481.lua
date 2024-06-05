@@ -280,7 +280,7 @@ Teleport = CustomSpeed.CreateToggle({
 Jump = CustomSpeed.CreateToggle({
 	Name = "Jump",
 	Function = function(value) end
-}) --]]
+})]]
 
 local flyConnection
 local Flight = {["Enabled"] = false}
